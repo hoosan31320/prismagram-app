@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const View = styled.View`
-  justify-content: center;
-  align-items: center;
-  flex: 1;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 `;
 
 const Text = styled.Text``;
@@ -17,7 +17,7 @@ export default ({ navigation }) => (
             <Text>Go to Login</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-            <Text>Go to Sugnup</Text>
+            <Text>Go to Signup</Text>
         </TouchableOpacity>
     </View>
 );
