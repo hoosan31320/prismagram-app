@@ -1,9 +1,9 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import Signup from "../screen/Auth/Signup";
-import Confirm from "../screen/Auth/Confirm";
-import Login from "../screen/Auth/Login";
-import AuthHome from "../screen/Auth/AuthHome";
+import Signup from "../screens/Auth/Signup";
+import Confirm from "../screens/Auth/Confirm";
+import Login from "../screens/Auth/Login";
+import AuthHome from "../screens/Auth/AuthHome";
 
 const AuthNavigation = createStackNavigator(
     {
@@ -13,7 +13,7 @@ const AuthNavigation = createStackNavigator(
         Confirm
     },
     {
-        headerMode: "nome"
+        headerMode: "none"
     }
 );
 
