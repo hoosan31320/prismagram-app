@@ -1,10 +1,10 @@
 import React from "react";
 import { View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "../screens/Home";
-import Search from "../screens/Search";
-import Notifications from "../screens/Notifications";
-import Profile from "../screens/Profile";
+import Home from "../screens/Tabs/Home";
+import Search from "../screens/Tabs/Search";
+import Notifications from "../screens/Tabs/Notifications";
+import Profile from "../screens/Tabs/Profile";
 
 const Tab = createBottomTabNavigator();
 
