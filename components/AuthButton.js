@@ -14,9 +14,9 @@ const Container = styled.View`
 `;
 
 const Text = styled.Text`
-color: white;
-text-align: center;
-font-weight: 600;
+    color: white;
+    text-align: center;
+    font-weight: 600;
 `;
 
 const AuthButton = ({ text, onPress }) => (
