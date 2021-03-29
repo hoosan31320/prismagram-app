@@ -12,10 +12,10 @@ function AuthNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="AuthHome" headerMode="none">
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="AuthHome" component={AuthHome} />
         <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Confirm" component={Confirm} />
+        <Stack.Screen name="AuthHome" component={AuthHome} />
       </Stack.Navigator>
     </NavigationContainer>
   );
