@@ -11,3 +11,5 @@ Screen:
 - [ ] Photo Detail
 - [ ] Photo Comments (Challenge)
 - [ ] Photo Likes (Challenge)
+
+expo -g cli update when facebook, google login
