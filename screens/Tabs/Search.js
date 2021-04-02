@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ScrollView, RefreshControl } from "react-native";
 import styled from "styled-components";
 import SearchBar from "../../components/SearchBar";
 import { gql } from "apollo-boost";
@@ -15,13 +16,14 @@ const SEARCH = gql`
           likeCount
           commentCount
       }
+      searchUser(term: $term) {
+        id
+        avatar
+        username
+        isFollowing
+        isSelf
+      }
   }
-`;
-
-const View = styled.View`
-  justify-content: center;
-  align-items: center;
-  flex: 1;
 `;
 
 const Text = styled.Text``;
@@ -29,7 +31,8 @@ const Text = styled.Text``;
 function Search({ navigation }) {
   const [keyword, setKeyword] = useState('');
   const [shouldFetch, setShouldFetch] = useState(false);
-  const { loading, data } = useQuery(SEARCH, {
+  const [refreshing, setRefreshing] = useState(false);
+  const { loading, data, refetch } = useQuery(SEARCH, {
     variables: { term: keyword },
     skip: !shouldFetch
   });
@@ -54,10 +57,25 @@ function Search({ navigation }) {
     setShouldFetch(true);
   }
 
+  const refresh = async () => {
+    try {
+      setRefreshing(true);
+      refetch({ variables: { term: keyword }});
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
   return (
-    <View>
-      <Text>Search</Text>
-    </View>
+    <ScrollView 
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+      } 
+    >
+
+    </ScrollView>
   );
 }
 
