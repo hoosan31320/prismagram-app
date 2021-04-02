@@ -48,7 +48,7 @@ export default () => (
         />
       )
     }}>
-      { () => stackFactory(Search, "Search", {title: "Search"}) }
+      { () => stackFactory(Search, "Search") }
     </Tab.Screen>
     <Tab.Screen name="Add" component={View}
       listeners={({ navigation }) => ({
