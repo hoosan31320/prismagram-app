@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, Platform } from "react-native";
 import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 import Swiper from "react-native-swiper";
+import { gql } from "apollo-boost";
 import constants from "../constants";
+import styles from "../styles";
+import { useMutation } from "react-apollo-hooks";
 
-const Container = styled.View``;
+export const TOGGLE_LIKE = gql`
+    mutation toggleLike($postId: String!) {
+        toggleLike(postId: $postId)
+    }
+`;
+
+const Container = styled.View`
+    margin-bottom: 40px;
+`;
 const Header = styled.View`
     padding: 15px;
     flex-direction: row;
@@ -18,7 +29,7 @@ const HeaderUserContainer = styled.View`
     margin-left: 10px;
 `;
 const Bold = styled.Text`
-    font-weight: 500;
+    font-weight: 700;
 `;
 const Location = styled.Text`
     font-size: 12px;
@@ -29,10 +40,48 @@ const IconsContainer = styled.View`
     flex-direction: row;
 `;
 const IconContainer = styled.View`
-    margin-right: 10px;s
+    margin-right: 10px;
 `;
 
-const Post = ({ user, location, files = [] }) => {
+const InfoContainer = styled.View`
+    padding: 10px;
+`;
+const Caption = styled.Text`
+    margin: 5px 0px;
+`;
+const CommentCount = styled.Text`
+    opacity: 0.5;
+    font-size: 13px;
+`;
+
+const Post = ({
+    id,
+    user,
+    location,
+    files = [],
+    likeCount: likeCountProp,
+    caption,
+    comments = [],
+    isLiked: isLikedProp
+}) => {
+    const [isLiked, setIsLiked] = useState(isLikedProp);
+    const [likeCount, setLikeCount] = useState(likeCountProp);
+    const toggleLikeMutation = useState(TOGGLE_LIKE, {
+        variables: {
+            postId: id
+        }
+    });
+    const handleLike = async () => {
+        if (isLiked === true) {
+            setLikeCount(l => l - 1);
+        } else {
+            setLikeCount(l => l + 1);
+        }
+        setIsLiked(p => !p);
+        try {
+            await toggleLikeMutation();
+        } catch (e) { }
+    };
     return (
         <Container>
             <Header>
@@ -54,31 +103,44 @@ const Post = ({ user, location, files = [] }) => {
                 style={{ height: constants.height / 2.5 }}
             >
                 {files.map(file => (
-                    <Image 
+                    <Image
                         style={{ width: constants.width, height: constants.height / 2.5 }}
                         key={file.id}
                         source={{ uri: file.url }}
                     />
                 ))}
             </Swiper>
-            <IconsContainer>
+            <InfoContainer>
+                <IconsContainer>
+                    <Touchable onPress={handleLike}>
+                        <IconContainer>
+                            <Ionicons
+                                size={27}
+                                color={isLiked ? styles.redColor : styles.blackColor}
+                                name={isLiked ? "heart" : "heart-outline"}
+                            />
+                        </IconContainer>
+                    </Touchable>
+                    <Touchable>
+                        <IconContainer>
+                            <Ionicons
+                                color={styles.blackColor}
+                                size={24}
+                                name={"chatbubble"}
+                            />
+                        </IconContainer>
+                    </Touchable>
+                </IconsContainer>
                 <Touchable>
-                    <IconContainer>
-                        <Ionicons 
-                            size={28}
-                            name={"heart-outline"}
-                        />
-                    </IconContainer>
+                    <Bold>{likeCount === 1 ? "1 like" : `${likeCount} likes`}</Bold>
                 </Touchable>
+                <Caption>
+                    <Bold>{user.username}</Bold> {caption}
+                </Caption>
                 <Touchable>
-                    <IconContainer>
-                        <Ionicons 
-                            size={24}
-                            name={"chatbubble-outline"}
-                        />
-                    </IconContainer>
+                    <CommentCount>See all {comments.length} comments</CommentCount>
                 </Touchable>
-            </IconsContainer>
+            </InfoContainer>
         </Container>
     );
 };
@@ -105,7 +167,7 @@ Post.propTypes = {
             user: PropTypes.shape({
                 id: PropTypes.string.isRequired,
                 username: PropTypes.string.isRequired
-            }).isRequired, 
+            }).isRequired,
         })
     ).isRequired,
     caption: PropTypes.string.isRequired,

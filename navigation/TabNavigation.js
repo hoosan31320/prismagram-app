@@ -60,8 +60,12 @@ export default () => (
       options={{
         tabBarIcon: () => (
           <NavIcon
-            focused={false} size={30}
-            name={Platform.OS === "ios" ? 'ios-add' : 'md-add'}
+            focused={false} size={32}
+            name={
+              Platform.OS === "ios" 
+                ? 'ios-add-circle-outline' 
+                : 'md-add-circle-outline'
+            }
           />
         )
       }}
