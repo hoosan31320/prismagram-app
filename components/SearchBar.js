@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { TextInput } from 'react-native';
+import React from "react";
+import PropTypes from "prop-types";
+import { TextInput } from "react-native";
 import constants from "../constants";
 import styles from "../styles";
 
 const SearchBar = ({ value, onChange, onSubmit }) => (
   <TextInput 
     style={{
-      width:constants.width - 40,
+      width:constants.width - 30,
       height:35,
       backgroundColor: styles.lightGreyColor,
       padding: 10,
