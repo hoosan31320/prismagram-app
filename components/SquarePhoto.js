@@ -1,10 +1,11 @@
 import React from "react";
 import { TouchableOpacity, Image } from "react-native";
+import { withNavigation } from "@react-navigation/compat";
 import PropTypes from "prop-types";
 import constants from "../constants";
 
-const SquarePhoto = ({ id, files = []}) => (
-    <TouchableOpacity>
+const SquarePhoto = ({ navigation, id, files = []}) => (
+    <TouchableOpacity onPress={ () => navigation.navigate("Detail", {id}) }>
         <Image 
             source={{ uri: files[0].url }}
             style= {{ width: constants.width / 3, height: constants.height / 6 }}
@@ -22,4 +23,4 @@ SquarePhoto.propTypes = {
     id: PropTypes.string.isRequired
 };
 
-export default SquarePhoto;
+export default withNavigation(SquarePhoto);
