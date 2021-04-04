@@ -10,17 +10,24 @@ import MessagesLink from "../components/MessagesLink";
 import NavIcon from "../components/NavIcon";
 import { stackStyles } from "./config";
 import Detail from "../screens/Detail";
+import styles from "../styles";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const stackFactory = (initialRoute, name, customConfig) => (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{ 
+        headerStyle: { ...stackStyles } 
+      }}
+    >
       <Stack.Screen name={name} component={initialRoute} 
-        options={{ ...customConfig, headerStyle: { ...stackStyles } }} 
+        options={{ ...customConfig }} 
       />
       <Stack.Screen name="Detail" component={Detail} 
-
+        options={{ headerTitle: "Photo",
+                   headerTintColor: styles.blackColor
+                }}
       />
     </Stack.Navigator>
 );

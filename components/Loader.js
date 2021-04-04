@@ -4,6 +4,7 @@ import styled from "styled-components";
 import styles from "../styles";
 
 const Container = styled.View`
+    margin-top: 50px;
     flex: 1;
     justify-content: center;
     align-items: center;
