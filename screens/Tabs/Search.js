@@ -71,8 +71,6 @@ function Search({ navigation }) {
     }
   };
 
-  console.log(loading, data);
-
   return (
     <ScrollView
       refreshControl={
